@@ -1,9 +1,10 @@
-# `npx nhht77-alert`
+# `npx nhht77-log`
 
-> Trung's customized console package for debug and using
+> Trung's customized console package for debug and logging
 
 ## Usage
 
 ```bash
-npx nhht77-alert
+# Not supported as the moment
+npx nhht77-log
 ```
