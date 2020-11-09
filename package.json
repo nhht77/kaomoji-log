@@ -1,0 +1,29 @@
+{
+  "name": "nhht77-log",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "bin": {
+    "nhht77-alert": "dist/index.js"
+  },
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "test": "tsc && node dist/test.js"
+  },
+  "keywords": [
+    "nhht77",
+    "Trung Nguyen",
+    "cli-app",
+    "cli",
+    "code",
+    "contributing",
+    "contributor",
+    "create"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "log-symbols": "^4.0.0"
+  },
+  "author": "Trung Nguyen",
+  "license": "MIT"
+}
