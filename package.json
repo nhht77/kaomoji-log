@@ -1,7 +1,7 @@
 {
   "name": "nhht77-log",
   "version": "1.0.1",
-  "description": "",
+  "description": "Trung's customized console package for debug and using",
   "main": "dist/index.js",
   "bin": {
     "nhht77-alert": "dist/index.js"
