@@ -24,6 +24,10 @@
     "chalk": "^4.1.0",
     "log-symbols": "^4.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nhht77/nhht77-log"
+  },
   "author": "Trung Nguyen",
   "license": "MIT",
   "publishConfig": {
