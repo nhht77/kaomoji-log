@@ -31,80 +31,82 @@ exports.Log = (function () {
         displayTime: true,
         displayKaomoji: true,
     };
-    var Set = function (options) { return (opts = __assign(__assign({}, opts), (options || {}))); };
+    // Note: Prepare Date String Log
     var now = function () {
         var d = new Date(), dformat = "";
-        if (typeof opts.displayTime == "object" && opts.displayTime.displayDate) {
-            dformat = [d.getMonth() + 1, d.getDate(), d.getFullYear()].join("/");
-        }
-        if (typeof opts.displayTime == "object" && opts.displayTime.displayHour) {
+        // Note: only show dd/mm/yyyy if option displayDate is true
+        if (typeof opts.displayTime == "object" && opts.displayTime.displayDate)
+            dformat = [d.getDate(), d.getMonth() + 1, d.getFullYear()].join("/");
+        // Note: only show hh:mm:ss if option displayHour is true
+        if (typeof opts.displayTime == "object" && opts.displayTime.displayHour)
             dformat = [d.getHours(), d.getMinutes(), d.getSeconds()].join(":");
-        }
-        if ((opts.displayTime && typeof opts.displayTime == "boolean") ||
+        // Note: show both dd/mm/yyyy hh:mm:ss if options is true
+        // Or displayHour and displayDate is true
+        if ((typeof opts.displayTime == "boolean" && opts.displayTime) ||
             (typeof opts.displayTime == "object" &&
                 opts.displayTime.displayDate &&
-                opts.displayTime.displayHour)) {
+                opts.displayTime.displayHour))
             dformat =
                 [d.getMonth() + 1, d.getDate(), d.getFullYear()].join("/") +
                     " " +
                     [d.getHours(), d.getMinutes(), d.getSeconds()].join(":");
-        }
         return gray(dformat);
     };
+    // Note: Prepare Kaomoji Log
+    // TODO PICK Random kaomoji that represent the category
     var kaomoji = function () { return ({
         success: opts.displayKaomoji ? green("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  ") : "",
         info: opts.displayKaomoji ? blue("(￣ρ￣)..zzZZ  ") : "",
         error: opts.displayKaomoji ? red("(╯°益°)╯彡┻━┻  ") : "",
         warning: opts.displayKaomoji ? yellow("┐(￣ヘ￣;)┌  ") : "",
     }); };
-    return {
-        Set: function (options) { return Set(options); },
-        Success: function (msg) {
-            if (msg === void 0) { msg = "Success Log"; }
-            exports.log("\n" + greenI(" SUCCESS ") + " " + now() + "\n");
-            if (typeof msg === "string")
-                exports.log("" + kaomoji().success + msg + "\n");
-            else {
-                opts.displayKaomoji && exports.log(kaomoji().success + " \n");
-                exports.log(msg);
-            }
-        },
-        Error: function (msg) {
-            if (msg === void 0) { msg = "Error Log"; }
-            exports.log("\n" + redI(" Error ") + " " + now() + " \n");
-            if (msg === "string")
-                exports.log("" + kaomoji().error + msg + "\n");
-            else {
-                opts.displayKaomoji && exports.log(kaomoji().error + " \n");
-                exports.log(msg);
-            }
-        },
-        Info: function (msg) {
-            if (msg === void 0) { msg = "Info Log"; }
-            exports.log("\n" + blueI(" Info ") + " " + now() + "\n");
-            if (msg === "string")
-                exports.log("" + kaomoji().info + msg + "\n");
-            else {
-                opts.displayKaomoji && exports.log(kaomoji().info + " \n");
-                exports.log(msg);
-            }
-        },
-        Warning: function (msg) {
-            if (msg === void 0) { msg = "Warning Log"; }
-            exports.log("\n" + yellowI(" WARNING ") + " " + now() + "\n");
-            if (msg === "string")
-                exports.log("" + kaomoji().warning + msg + " \n");
-            else {
-                opts.displayKaomoji && exports.log(kaomoji().warning + " \n");
-                exports.log(msg);
-            }
-        },
-        Test: function (msg) {
-            if (msg === void 0) { msg = "Test"; }
-            exports.log("" + kaomoji().success + msg + " " + opts.displayKaomoji);
-        },
-        JSON: function (val) { return exports.log(val); },
+    function Log(value, options) {
+        if (options)
+            Log.SetOptions(options);
+        exports.log("\n" + now());
+        exports.log(value);
+    }
+    Log.GetOptions = function () {
+        exports.log(opts);
+        return opts;
     };
+    Log.SetOptions = function (options) {
+        opts = __assign(__assign({}, opts), (options || {}));
+    };
+    Log._Build = function (title, kaomoji_str, msg) {
+        exports.log("\n" + title + " " + now() + "\n");
+        if (typeof msg === "string")
+            exports.log("" + kaomoji_str + msg);
+        else {
+            opts.displayKaomoji && exports.log(kaomoji_str + " \n");
+            exports.log(msg);
+        }
+    };
+    Log.Success = function (msg, options) {
+        if (msg === void 0) { msg = "Success Log"; }
+        if (options)
+            Log.SetOptions(options);
+        Log._Build(greenI(" SUCCESS "), kaomoji().success, msg);
+    };
+    Log.Error = function (msg, options) {
+        if (msg === void 0) { msg = "Error Log"; }
+        if (options)
+            Log.SetOptions(options);
+        Log._Build(redI(" Error "), kaomoji().error, msg);
+    };
+    Log.Info = function (msg, options) {
+        if (msg === void 0) { msg = "Info Log"; }
+        if (options)
+            Log.SetOptions(options);
+        Log._Build(blueI(" Info "), kaomoji().info, msg);
+    };
+    Log.Warning = function (msg, options) {
+        if (msg === void 0) { msg = "Warning Log"; }
+        if (options)
+            Log.SetOptions(options);
+        Log._Build(yellowI(" WARNING "), kaomoji().warning, msg);
+    };
+    return Log;
 })();
 exports.default = exports.Log;
 //# sourceMappingURL=index.js.map

@@ -27,35 +27,37 @@ export const Log = (function () {
     displayKaomoji: true,
   };
 
-  const Set = (options: Options) => (opts = { ...opts, ...(options || {}) });
-
+  // Note: Prepare Date String Log
   const now = () => {
-    var d = new Date(),
+    let d = new Date(),
       dformat = "";
 
-    if (typeof opts.displayTime == "object" && opts.displayTime.displayDate) {
-      dformat = [d.getMonth() + 1, d.getDate(), d.getFullYear()].join("/");
-    }
+    // Note: only show dd/mm/yyyy if option displayDate is true
+    if (typeof opts.displayTime == "object" && opts.displayTime.displayDate)
+      dformat = [d.getDate(), d.getMonth() + 1, d.getFullYear()].join("/");
 
-    if (typeof opts.displayTime == "object" && opts.displayTime.displayHour) {
+    // Note: only show hh:mm:ss if option displayHour is true
+    if (typeof opts.displayTime == "object" && opts.displayTime.displayHour)
       dformat = [d.getHours(), d.getMinutes(), d.getSeconds()].join(":");
-    }
 
+    // Note: show both dd/mm/yyyy hh:mm:ss if options is true
+    // Or displayHour and displayDate is true
     if (
-      (opts.displayTime && typeof opts.displayTime == "boolean") ||
+      (typeof opts.displayTime == "boolean" && opts.displayTime) ||
       (typeof opts.displayTime == "object" &&
         opts.displayTime.displayDate &&
         opts.displayTime.displayHour)
-    ) {
+    )
       dformat =
         [d.getMonth() + 1, d.getDate(), d.getFullYear()].join("/") +
         " " +
         [d.getHours(), d.getMinutes(), d.getSeconds()].join(":");
-    }
 
     return gray(dformat);
   };
 
+  // Note: Prepare Kaomoji Log
+  // TODO PICK Random kaomoji that represent the category
   let kaomoji = () => ({
     success: opts.displayKaomoji ? green("(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  ") : "",
     info: opts.displayKaomoji ? blue("(￣ρ￣)..zzZZ  ") : "",
@@ -63,51 +65,52 @@ export const Log = (function () {
     warning: opts.displayKaomoji ? yellow("┐(￣ヘ￣;)┌  ") : "",
   });
 
-  return {
-    Set: (options: Options) => Set(options),
+  function Log(value: any, options?: Options) {
+    if (options) Log.SetOptions(options);
 
-    Success: (msg: string | Object = "Success Log") => {
-      log(`\n${greenI(" SUCCESS ")} ${now()}\n`);
-      if (typeof msg === "string") log(`${kaomoji().success}${msg}\n`);
-      else {
-        opts.displayKaomoji && log(`${kaomoji().success} \n`);
-        log(msg);
-      }
-    },
+    log(`\n${now()}`);
+    log(value);
+  }
 
-    Error: (msg: string | Object = "Error Log") => {
-      log(`\n${redI(" Error ")} ${now()} \n`);
-      if (msg === "string") log(`${kaomoji().error}${msg}\n`);
-      else {
-        opts.displayKaomoji && log(`${kaomoji().error} \n`);
-        log(msg);
-      }
-    },
-
-    Info: (msg: string | Object = "Info Log") => {
-      log(`\n${blueI(" Info ")} ${now()}\n`);
-      if (msg === "string") log(`${kaomoji().info}${msg}\n`);
-      else {
-        opts.displayKaomoji && log(`${kaomoji().info} \n`);
-        log(msg);
-      }
-    },
-
-    Warning: (msg: string | Object = "Warning Log") => {
-      log(`\n${yellowI(" WARNING ")} ${now()}\n`);
-      if (msg === "string") log(`${kaomoji().warning}${msg} \n`);
-      else {
-        opts.displayKaomoji && log(`${kaomoji().warning} \n`);
-        log(msg);
-      }
-    },
-
-    Test: (msg: string = "Test") => {
-      log(`${kaomoji().success}${msg} ${opts.displayKaomoji}`);
-    },
-
-    JSON: (val: any) => log(val),
+  Log.GetOptions = function () {
+    log(opts);
+    return opts;
   };
+
+  Log.SetOptions = function (options: Options) {
+    opts = { ...opts, ...(options || {}) };
+  };
+
+  Log._Build = (title: string, kaomoji_str: string, msg: string | Object) => {
+    log(`\n${title} ${now()}\n`);
+    if (typeof msg === "string") log(`${kaomoji_str}${msg}`);
+    else {
+      opts.displayKaomoji && log(`${kaomoji_str} \n`);
+      log(msg);
+    }
+  };
+
+  Log.Success = (msg: string | Object = "Success Log", options?: Options) => {
+    if (options) Log.SetOptions(options);
+    Log._Build(greenI(" SUCCESS "), kaomoji().success, msg);
+  };
+
+  Log.Error = (msg: string | Object = "Error Log", options?: Options) => {
+    if (options) Log.SetOptions(options);
+    Log._Build(redI(" Error "), kaomoji().error, msg);
+  };
+
+  Log.Info = (msg: string | Object = "Info Log", options?: Options) => {
+    if (options) Log.SetOptions(options);
+    Log._Build(blueI(" Info "), kaomoji().info, msg);
+  };
+
+  Log.Warning = (msg: string | Object = "Warning Log", options?: Options) => {
+    if (options) Log.SetOptions(options);
+    Log._Build(yellowI(" WARNING "), kaomoji().warning, msg);
+  };
+
+  return Log;
 })();
 
 export default Log;

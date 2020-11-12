@@ -1,22 +1,25 @@
 import Log from "./index";
 
+// Support Log without any format
+Log("No format value");
+Log({ Object: "is supported" });
+Log({ Array: "is supported" });
+
 // Log String
-Log.Success("Stranger things here");
-Log.Info("Stranger things here");
-Log.Error("Stranger things here");
-Log.Warning("Stranger things here");
+Log.Success("normal string with Kaomoji");
 
 // Log Object
-Log.Success({ value: "object" });
-Log.Info({ value: "object" });
-Log.Error({ value: "object" });
-Log.Warning({ value: "object" });
+Log.Success({ object: "with Kaomoji" });
 
-Log.Set({
+Log.SetOptions({
   displayTime: true,
   displayKaomoji: false,
 });
-Log.Success("No Kaomoji");
-Log.Info("No Kaomoji");
-Log.Error("No Kaomoji");
-Log.Warning("No Kaomoji");
+Log.Success("Normal string without Kaomoji");
+
+// Log Array
+Log.SetOptions({
+  displayTime: true,
+  displayKaomoji: true,
+});
+Log.Success([{ array1: "with Kaomoji" }, { array2: "with Kaomoji" }]);

@@ -1,5 +1,5 @@
 {
-  "name": "nhht77-log",
+  "name": "@nhht77/nhht77-log",
   "version": "1.0.3",
   "description": "Trung's customized console package for debug and using",
   "main": "dist/index.js",
