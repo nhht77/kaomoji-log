@@ -1,6 +1,6 @@
 {
   "name": "@nhht77/kaomoji-log",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Trung's customized console package for debug and using",
   "main": "dist/index.js",
   "bin": {
