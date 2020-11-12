@@ -2,6 +2,12 @@
 
 > Debug your application with kaomoji in the console
 
+## Instalation
+
+```bash
+npm install @nhht77/kaomoji-log
+```
+
 ## Usage
 
 To use this package, please refer to the following code:
