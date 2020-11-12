@@ -1,9 +1,9 @@
-import Log from "./index";
+import Log, { log } from "./index";
 
 // Support Log without any format
+log("Support Log without any format");
 Log("No format value");
 Log({ Object: "is supported" });
-Log({ Array: "is supported" });
 
 // Log String
 Log.Success("normal string with Kaomoji");
