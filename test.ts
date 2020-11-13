@@ -1,4 +1,5 @@
 import Log, { log } from "./index";
+import { Config } from "./utils/config";
 
 // Support Log without any format
 log("Support Log without any format");
