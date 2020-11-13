@@ -23,3 +23,13 @@ Log.SetOptions({
   displayKaomoji: true,
 });
 Log.Success([{ array1: "with Kaomoji" }, { array2: "with Kaomoji" }]);
+
+// Time Options to be false
+Log.SetOptions({
+  displayTime: {
+    displayDate: true,
+    displayHour: false,
+  },
+  displayKaomoji: true,
+});
+Log.Success([{ array1: "with Kaomoji" }, { array2: "with Kaomoji" }]);

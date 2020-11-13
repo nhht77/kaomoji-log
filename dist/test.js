@@ -39,4 +39,13 @@ index_1.default.SetOptions({
     displayKaomoji: true,
 });
 index_1.default.Success([{ array1: "with Kaomoji" }, { array2: "with Kaomoji" }]);
+// Time Options to be false
+index_1.default.SetOptions({
+    displayTime: {
+        displayDate: true,
+        displayHour: false,
+    },
+    displayKaomoji: true,
+});
+index_1.default.Success([{ array1: "with Kaomoji" }, { array2: "with Kaomoji" }]);
 //# sourceMappingURL=test.js.map
