@@ -13,21 +13,19 @@ export const Log = (function () {
   Log.SetOptions = configs.setOptions;
 
   function Log(value: any, options?: Options) {
-    // TODO Instead of set, do getOptions
-    if (options) Log.SetOptions(options);
-    log(`\n${now()}`);
+    let { displayTime } = configs.getOptions(options);
+    log(`\n${now(displayTime)} `);
     log(value);
   }
 
   Log._Build = _Build;
 
   Log.Success = (msg: string | Object = "Success Log", options?: Options) => {
-    if (options) Log.SetOptions(options);
     Log._Build(
       title.success,
       kaomoji(options?.displayKaomoji).success,
       msg,
-      configs.options
+      configs.getOptions(options)
     );
   };
 
@@ -37,7 +35,7 @@ export const Log = (function () {
       title.error,
       kaomoji(options?.displayKaomoji).error,
       msg,
-      configs.options
+      configs.getOptions(options)
     );
   };
 
@@ -47,7 +45,7 @@ export const Log = (function () {
       title.info,
       kaomoji(options?.displayKaomoji).info,
       msg,
-      configs.options
+      configs.getOptions(options)
     );
   };
 
@@ -57,7 +55,7 @@ export const Log = (function () {
       title.warning,
       kaomoji(options?.displayKaomoji).warning,
       msg,
-      configs.options
+      configs.getOptions(options)
     );
   };
 

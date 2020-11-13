@@ -9,7 +9,7 @@ export interface IConfig {
   options: Options | boolean;
 
   setOptions: (config: Options) => void;
-  getOptions: () => Options;
+  getOptions: (config?: Options) => Options;
 }
 
 export class Config implements IConfig {
@@ -21,5 +21,8 @@ export class Config implements IConfig {
   setOptions = (options: Options) => {
     this.options = { ...this.options, ...(options || {}) };
   };
-  getOptions = () => this.options;
+  getOptions = (options?: Options) => {
+    let opts: Options = { ...this.options, ...(options || {}) };
+    return opts;
+  };
 }

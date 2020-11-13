@@ -22,7 +22,10 @@ var Config = /** @class */ (function () {
         this.setOptions = function (options) {
             _this.options = __assign(__assign({}, _this.options), (options || {}));
         };
-        this.getOptions = function () { return _this.options; };
+        this.getOptions = function (options) {
+            var opts = __assign(__assign({}, _this.options), (options || {}));
+            return opts;
+        };
     }
     return Config;
 }());

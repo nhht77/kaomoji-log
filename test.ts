@@ -1,12 +1,12 @@
 import Log, { log } from "./index";
-import { Config } from "./utils/config";
 
 // Support Log without any format
-log("Support Log without any format");
-Log("No format value");
+Log("No format value", {
+  displayTime: false,
+});
 Log({ Object: "is supported" });
 
-// Log String
+// // Log String
 Log.Success("normal string with Kaomoji");
 
 // Log Object
